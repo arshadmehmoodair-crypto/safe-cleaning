@@ -1,0 +1,71 @@
+# Query: SAFE CLEANING AND MAINTENANCE LIMITED
+# ContextLines: 1
+
+15 results - 9 files
+
+src\components\About.jsx:
+  5  
+  6:         <h2>About AMIRAH STORE LIMITED</h2>
+  7  
+  8          <p className="about-intro">
+  9:          AMIRAH STORE LIMITED is a UK-based supplier
+  10            of high-quality cleaning and maintenance products. We provide
+
+src\components\Contact.jsx:
+  69              <p>
+  70:               AMIRAH STORE LIMITED
+  71              </p>
+
+src\components\Hero.jsx:
+  21          <p>
+  22:           AMIRAH STORE LIMITED supplies premium-quality
+  23            cleaning and maintenance products for homes, offices, schools,
+
+src\pages\AboutPage.jsx:
+   6        <div className="card" style={{ maxWidth: "900px", margin: "40px auto" }}>
+   7:         <h3>AMIRAH STORE LIMITED</h3>
+   8  
+   9          <p>
+  10:           AMIRAH STORE LIMITED supplies professional cleaning
+  11            products and maintenance solutions for homes, offices and commercial
+
+src\pages\ContactPage.jsx:
+  48        >
+  49:         <h3>AMIRAH STORE LIMITED</h3>
+  50  
+
+src\pages\PrivacyPolicy.jsx:
+   8          <p>
+   9:           At <strong>AMIRAH STORE LIMITED</strong>,
+  10            we value your privacy and are committed to protecting your
+
+  42          <p>
+  43:           AMIRAH STORE LIMITED
+  44            <br />
+
+src\pages\ReturnsPage.jsx:
+   8          <p>
+   9:           At <strong>AMIRAH STORE LIMITED</strong>,
+  10            we want you to be satisfied with every purchase. If you are not
+
+  41          <p>
+  42:           AMIRAH STORE LIMITED
+  43            <br />
+
+src\pages\ShippingPage.jsx:
+   8          <p>
+   9:           At <strong>AMIRAH STORE LIMITED</strong>,
+  10            we aim to dispatch and deliver your orders as quickly and
+
+  54          <p>
+  55:           AMIRAH STORE LIMITED
+  56            <br />
+
+src\pages\TermsPage.jsx:
+   8          <p>
+   9:           Welcome to <strong>AMIRAH STORE LIMITED</strong>.
+  10            By using our website and placing an order, you agree to the
+
+  52          <p>
+  53:           AMIRAH STORE LIMITED
+  54            <br />

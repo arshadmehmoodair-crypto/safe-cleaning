@@ -15,7 +15,7 @@ function Navbar() {
     <nav className="navbar">
       <div className="logo">
         <NavLink to="/" onClick={() => setMenuOpen(false)}>
-          SAFE CLEANING
+          AMIRAH STORE LIMITED
         </NavLink>
       </div>
 

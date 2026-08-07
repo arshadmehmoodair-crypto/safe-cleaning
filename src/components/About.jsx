@@ -3,10 +3,10 @@ function About() {
     <section className="about">
       <div className="about-container">
 
-        <h2>About SAFE CLEANING AND MAINTENANCE LIMITED</h2>
+        <h2>About AMIRAH STORE LIMITED</h2>
 
         <p className="about-intro">
-          SAFE CLEANING AND MAINTENANCE LIMITED is a UK-based supplier
+          AMIRAH STORE LIMITED is a UK-based supplier
           of high-quality cleaning and maintenance products. We provide
           reliable solutions for homes, offices, schools, hotels,
           healthcare facilities and commercial businesses throughout
@@ -52,13 +52,13 @@ function About() {
             <h3>📍 Our Location</h3>
 
             <p>
-              3 St Awdry Road
+              115 Wantage Road
               <br />
-              Barking
+              Reading
               <br />
-              London
+              Berkshire
               <br />
-              IG11 7QB
+              RG30 2SN
               <br />
               United Kingdom
             </p>
@@ -70,7 +70,7 @@ function About() {
             <p>
               Phone:
               <br />
-              +44 7723 803492
+              +44 7577 315486
             </p>
 
             <br />
@@ -78,7 +78,7 @@ function About() {
             <p>
               Business Email:
               <br />
-              Coming Soon
+              support@amirahstoreltd.co.uk
             </p>
           </div>
 

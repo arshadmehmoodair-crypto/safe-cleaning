@@ -14,25 +14,25 @@ function Contact() {
 
           <div className="contact-card">
             <h3>📞 Phone</h3>
-            <p>+44 7723 803492</p>
+            <p>+44 7577 315486</p>
           </div>
 
           <div className="contact-card">
             <h3>📧 Business Email</h3>
-            <p>Coming Soon</p>
+            <p>support@amirahstoreltd.co.uk</p>
           </div>
 
           <div className="contact-card">
             <h3>📍 Business Address</h3>
 
             <p>
-              3 St Awdry Road
+              115 Wantage Road
               <br />
-              Barking
+              Reading
               <br />
-              London
+              Berkshire
               <br />
-              IG11 7QB
+              RG30 2SN
               <br />
               United Kingdom
             </p>
@@ -67,7 +67,7 @@ function Contact() {
             <h3>🏢 Company</h3>
 
             <p>
-              SAFE CLEANING AND MAINTENANCE LIMITED
+              AMIRAH STORE LIMITED
             </p>
           </div>
 

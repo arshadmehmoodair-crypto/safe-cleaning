@@ -8,7 +8,7 @@ function Footer() {
         {/* Company */}
 
         <div className="footer-section">
-          <h2>SAFE CLEANING UK</h2>
+          <h2>AMIRAH AMIRAH STORE LIMITED</h2>
 
           <p>
             We supply high-quality cleaning products for homes,
@@ -60,19 +60,19 @@ function Footer() {
           <h3>Contact Us</h3>
 
           <p>
-            📍 3 St Awdry Road,
+            📍 115 Wantage Road,
             <br />
-            Barking,
+            Reading,
             <br />
-            London,
+            Berkshire,
             <br />
-            IG11 7QB,
+            RG30 2SN,
             <br />
             United Kingdom
           </p>
 
           <p>
-            📞 +44 7723 803492
+            📞 +44 7577 315486
           </p>
 
           <p>
@@ -84,7 +84,7 @@ function Footer() {
           <p>
             📧 Business Email
             <br />
-            (Coming Soon)
+            support@amirahstoreltd.co.uk
           </p>
 
         </div>
@@ -96,7 +96,7 @@ function Footer() {
       <div className="footer-bottom">
 
         <p>
-          © 2026 SAFE CLEANING UK. All Rights Reserved.
+          © 2026 AMIRAH AMIRAH STORE LIMITED. All Rights Reserved.
         </p>
 
       </div>

@@ -6,7 +6,7 @@ function ReturnsPolicy() {
         <h1>Returns & Refund Policy</h1>
 
         <p>
-          At <strong>SAFE CLEANING AND MAINTENANCE LIMITED</strong>,
+          At <strong>AMIRAH STORE LIMITED</strong>,
           we want you to be satisfied with every purchase. If you are not
           completely happy with your order, please read our returns policy
           below.
@@ -39,15 +39,15 @@ function ReturnsPolicy() {
         <h2>Return Address</h2>
 
         <p>
-          SAFE CLEANING AND MAINTENANCE LIMITED
+          AMIRAH STORE LIMITED
           <br />
-          3 St Awdry Road
+          115 Wantage Road
           <br />
-          Barking
+          Reading
           <br />
-          London
+          Berkshire
           <br />
-          IG11 7QB
+          RG30 2SN
           <br />
           United Kingdom
         </p>
@@ -55,9 +55,9 @@ function ReturnsPolicy() {
         <h2>Need Help?</h2>
 
         <p>
-          Phone: +44 7723 803492
+          Phone: +44 7577 315486
           <br />
-          Email: Business Email Coming Soon
+          Email: support@amirahstoreltd.co.uk
         </p>
 
       </div>

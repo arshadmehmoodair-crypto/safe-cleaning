@@ -6,7 +6,7 @@ function ShippingPolicy() {
         <h1>Shipping Policy</h1>
 
         <p>
-          At <strong>SAFE CLEANING AND MAINTENANCE LIMITED</strong>,
+          At <strong>AMIRAH STORE LIMITED</strong>,
           we aim to dispatch and deliver your orders as quickly and
           efficiently as possible throughout the United Kingdom.
         </p>
@@ -52,7 +52,7 @@ function ShippingPolicy() {
         <h2>Business Address</h2>
 
         <p>
-          SAFE CLEANING AND MAINTENANCE LIMITED
+          AMIRAH STORE LIMITED
           <br />
           3 St Awdry Road
           <br />
@@ -64,7 +64,7 @@ function ShippingPolicy() {
           <br />
           United Kingdom
           <br /><br />
-          Phone: +44 7723 803492
+          Phone: +44 7577 315486
         </p>
 
       </div>

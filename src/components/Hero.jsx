@@ -19,7 +19,7 @@ function Hero() {
         </h1>
 
         <p>
-          SAFE CLEANING AND MAINTENANCE LIMITED supplies premium-quality
+          AMIRAH STORE LIMITED supplies premium-quality
           cleaning and maintenance products for homes, offices, schools,
           hospitals and commercial businesses across the United Kingdom.
         </p>

@@ -6,7 +6,7 @@ function PrivacyPolicy() {
         <h1>Privacy Policy</h1>
 
         <p>
-          At <strong>SAFE CLEANING AND MAINTENANCE LIMITED</strong>,
+          At <strong>AMIRAH STORE LIMITED</strong>,
           we value your privacy and are committed to protecting your
           personal information.
         </p>
@@ -40,21 +40,22 @@ function PrivacyPolicy() {
         <h2>Contact</h2>
 
         <p>
-          SAFE CLEANING AND MAINTENANCE LIMITED
+          AMIRAH STORE LIMITED
           <br />
-          3 St Awdry Road
+          115 Wantage Road
+
           <br />
-          Barking
+          Reading
           <br />
-          London
+          Berkshire
           <br />
-          IG11 7QB
+          RG30 2SN
           <br />
           United Kingdom
           <br /><br />
-          Phone: +44 7723 803492
+          Phone: +44 7577 315486
           <br />
-          Email: Business Email Coming Soon
+          Email: support@amirahstoreltd.co.uk
         </p>
 
       </div>

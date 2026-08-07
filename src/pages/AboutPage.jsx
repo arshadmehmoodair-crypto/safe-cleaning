@@ -4,10 +4,10 @@ function AboutPage() {
       <h2>About Us</h2>
 
       <div className="card" style={{ maxWidth: "900px", margin: "40px auto" }}>
-        <h3>SAFE CLEANING AND MAINTENANCE LIMITED</h3>
+        <h3>AMIRAH STORE LIMITED</h3>
 
         <p>
-          SAFE CLEANING AND MAINTENANCE LIMITED supplies professional cleaning
+          AMIRAH STORE LIMITED supplies professional cleaning
           products and maintenance solutions for homes, offices and commercial
           businesses across the United Kingdom.
         </p>
