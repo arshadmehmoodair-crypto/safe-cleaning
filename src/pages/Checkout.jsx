@@ -42,15 +42,17 @@ function Checkout() {
     setLoading(true);
 
     try {
+      const API_URL =
+        import.meta.env.VITE_API_URL ||
+        "http://localhost:4242";
+
       const response = await axios.post(
-        "http://localhost:4242/create-checkout-session",
+        `${API_URL}/create-checkout-session`,
         {
           cartItems,
           customer,
         }
       );
-
-      console.log(response.data);
 
       if (response.data.success && response.data.url) {
         window.location.href = response.data.url;
@@ -58,16 +60,17 @@ function Checkout() {
       }
 
       alert("Unable to create Stripe Checkout Session.");
-
     } catch (err) {
       console.error(err);
 
       if (err.response) {
-        alert(err.response.data.error);
+        alert(
+          err.response.data.error ||
+          "Payment could not be started."
+        );
       } else {
         alert("Unable to connect to payment server.");
       }
-
     } finally {
       setLoading(false);
     }
@@ -75,17 +78,13 @@ function Checkout() {
 
   return (
     <section className="checkout-page">
-
       <h2>Secure Checkout</h2>
 
       <div className="checkout-container">
-
         <div className="checkout-form">
-
           <h3>Shipping Information</h3>
 
           <form onSubmit={handleSubmit}>
-
             <input
               type="text"
               name="fullName"
@@ -158,13 +157,10 @@ function Checkout() {
                 ? "Redirecting..."
                 : "Proceed to Payment"}
             </button>
-
           </form>
-
         </div>
 
         <div className="summary-box">
-
           <h3>Order Summary</h3>
 
           {cartItems.map((item) => (
@@ -196,11 +192,8 @@ function Checkout() {
           <div className="secure-box">
             🔒 Secure Stripe Checkout
           </div>
-
         </div>
-
       </div>
-
     </section>
   );
 }

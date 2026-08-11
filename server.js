@@ -6,7 +6,7 @@ import Stripe from "stripe";
 dotenv.config();
 
 const app = express();
-const PORT = 4242;
+const PORT = process.env.PORT || 4242;
 
 app.use(cors());
 app.use(express.json());
@@ -41,21 +41,22 @@ app.post("/create-checkout-session", async (req, res) => {
       quantity: item.quantity,
     }));
 
+    const frontendUrl =
+      process.env.FRONTEND_URL || "http://localhost:5173";
+
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       line_items: lineItems,
-
       customer_email: customer.email,
 
-      success_url: "http://localhost:5174/success",
-      cancel_url: "http://localhost:5174/cancel",
+      success_url: `${frontendUrl}/success`,
+      cancel_url: `${frontendUrl}/cancel`,
     });
 
     res.json({
       success: true,
       url: session.url,
     });
-
   } catch (err) {
     console.error(err);
 
@@ -66,6 +67,6 @@ app.post("/create-checkout-session", async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Stripe Server Running on port ${PORT}`);
 });
