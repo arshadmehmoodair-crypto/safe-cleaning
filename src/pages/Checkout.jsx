@@ -42,12 +42,8 @@ function Checkout() {
     setLoading(true);
 
     try {
-      const API_URL =
-        import.meta.env.VITE_API_URL ||
-        "http://localhost:4242";
-
       const response = await axios.post(
-        `${API_URL}/create-checkout-session`,
+        "https://safe-cleaning.onrender.com/create-checkout-session",
         {
           cartItems,
           customer,
@@ -66,7 +62,7 @@ function Checkout() {
       if (err.response) {
         alert(
           err.response.data.error ||
-          "Payment could not be started."
+            "Payment could not be started."
         );
       } else {
         alert("Unable to connect to payment server.");
