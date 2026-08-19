@@ -165,7 +165,7 @@ const products = [
   name: "Universal Disinfectant Wipes",
   category: "Disinfectants",
   image: universalDisinfectantWipes,
-  price: "£9.99",
+  price: "£2.01",
   description:
     "Ready-to-use disinfectant wipes that effectively remove dirt, bacteria and viruses from everyday surfaces.",
   features: [
@@ -193,7 +193,7 @@ const products = [
   name: "Dr. Beckmann Stain Removers",
   category: "Laundry Care",
   image: drBeckmann,
-  price: "£9.99",
+  price: "£2.99",
   description:
     "Specialist stain remover designed to tackle tough stains while remaining gentle on fabrics.",
   features: [
