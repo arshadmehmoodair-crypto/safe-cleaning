@@ -28,6 +28,13 @@ app.post("/create-checkout-session", async (req, res) => {
       });
     }
 
+    if (!customer || !customer.email) {
+      return res.status(400).json({
+        success: false,
+        error: "Customer email is required",
+      });
+    }
+
     const lineItems = cartItems.map((item) => ({
       price_data: {
         currency: "gbp",
@@ -46,8 +53,31 @@ app.post("/create-checkout-session", async (req, res) => {
 
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
+
       line_items: lineItems,
+
       customer_email: customer.email,
+
+      customer_creation: "always",
+
+      billing_address_collection: "required",
+
+      invoice_creation: {
+        enabled: true,
+        invoice_data: {
+          description: "AMIRAH STORE LIMITED - Customer Order",
+          footer: "Thank you for shopping with AMIRAH STORE LIMITED.",
+        },
+      },
+
+      metadata: {
+        customer_name: customer.fullName || "",
+        customer_phone: customer.phone || "",
+        customer_address: customer.address || "",
+        customer_city: customer.city || "",
+        customer_postcode: customer.postcode || "",
+        customer_country: customer.country || "",
+      },
 
       success_url: `${frontendUrl}/success`,
       cancel_url: `${frontendUrl}/cancel`,
@@ -58,7 +88,7 @@ app.post("/create-checkout-session", async (req, res) => {
       url: session.url,
     });
   } catch (err) {
-    console.error(err);
+    console.error("Stripe Error:", err);
 
     res.status(500).json({
       success: false,
