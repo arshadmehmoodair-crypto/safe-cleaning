@@ -6,10 +6,8 @@ import Stripe from "stripe";
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 4242;
 
-app.use(cors());
-app.use(express.json());
+const PORT = process.env.PORT || 4242;
 
 const secretKey = process.env.STRIPE_SECRET_KEY;
 
@@ -28,13 +26,103 @@ console.log(`🔐 STRIPE MODE: ${stripeMode}`);
 
 const stripe = new Stripe(secretKey);
 
+// =====================================================
+// WEBHOOK
+// IMPORTANT: webhook must come BEFORE express.json()
+// =====================================================
+
+app.post(
+  "/webhook",
+  express.raw({ type: "application/json" }),
+  async (req, res) => {
+    const signature = req.headers["stripe-signature"];
+
+    let event;
+
+    try {
+      if (!process.env.STRIPE_WEBHOOK_SECRET) {
+        console.error("❌ STRIPE_WEBHOOK_SECRET is missing!");
+        return res.status(500).send("Webhook secret missing");
+      }
+
+      event = stripe.webhooks.constructEvent(
+        req.body,
+        signature,
+        process.env.STRIPE_WEBHOOK_SECRET
+      );
+    } catch (err) {
+      console.error("❌ Webhook signature error:", err.message);
+      return res.status(400).send(`Webhook Error: ${err.message}`);
+    }
+
+    console.log("✅ Stripe webhook received:", event.type);
+
+    if (event.type === "checkout.session.completed") {
+      const session = event.data.object;
+
+      console.log("💰 Payment completed!");
+      console.log("Session ID:", session.id);
+      console.log("Customer email:", session.customer_email);
+
+      try {
+        const lineItems =
+          await stripe.checkout.sessions.listLineItems(
+            session.id,
+            {
+              limit: 100,
+            }
+          );
+
+        console.log(
+          "🛒 Purchased items:",
+          lineItems.data.map((item) => ({
+            name: item.description,
+            quantity: item.quantity,
+          }))
+        );
+
+        // =================================================
+        // YAHAN DATABASE SE PRODUCT STOCK KAM HOGA
+        // =================================================
+        //
+        // Abhi hum pehle webhook successfully receive karwa
+        // rahe hain.
+        //
+        // Database connect hone ke baad yahan:
+        // stock = stock - quantity
+        //
+        // hoga.
+        // =================================================
+
+      } catch (err) {
+        console.error(
+          "❌ Could not get checkout items:",
+          err.message
+        );
+      }
+    }
+
+    res.json({ received: true });
+  }
+);
+
+// Normal JSON requests
+app.use(cors());
+app.use(express.json());
+
+// =====================================================
+// TEST ROUTE
+// =====================================================
+
 app.get("/", (req, res) => {
   res.json({
     success: true,
     message: "Stripe Server Running",
     stripeMode,
   });
-});
+});// =====================================================
+// CREATE CHECKOUT SESSION
+// =====================================================
 
 app.post("/create-checkout-session", async (req, res) => {
   try {
@@ -69,48 +157,49 @@ app.post("/create-checkout-session", async (req, res) => {
         ),
       },
 
-      quantity: item.quantity,
+      quantity: Number(item.quantity) || 1,
     }));
 
     const frontendUrl =
       process.env.FRONTEND_URL ||
       "https://amirahstoreltd.co.uk";
 
-    const session = await stripe.checkout.sessions.create({
-      mode: "payment",
+    const session =
+      await stripe.checkout.sessions.create({
+        mode: "payment",
 
-      line_items: lineItems,
+        line_items: lineItems,
 
-      customer_email: customer.email,
+        customer_email: customer.email,
 
-      customer_creation: "always",
+        customer_creation: "always",
 
-      billing_address_collection: "required",
+        billing_address_collection: "required",
 
-      invoice_creation: {
-        enabled: true,
+        invoice_creation: {
+          enabled: true,
 
-        invoice_data: {
-          description:
-            "AMIRAH STORE LIMITED - Customer Order",
+          invoice_data: {
+            description:
+              "AMIRAH STORE LIMITED - Customer Order",
 
-          footer:
-            "Thank you for shopping with AMIRAH STORE LIMITED.",
+            footer:
+              "Thank you for shopping with AMIRAH STORE LIMITED.",
+          },
         },
-      },
 
-      metadata: {
-        customer_name: customer.fullName || "",
-        customer_phone: customer.phone || "",
-        customer_address: customer.address || "",
-        customer_city: customer.city || "",
-        customer_postcode: customer.postcode || "",
-        customer_country: customer.country || "",
-      },
+        metadata: {
+          customer_name: customer.fullName || "",
+          customer_phone: customer.phone || "",
+          customer_address: customer.address || "",
+          customer_city: customer.city || "",
+          customer_postcode: customer.postcode || "",
+          customer_country: customer.country || "",
+        },
 
-      success_url: `${frontendUrl}/success`,
-      cancel_url: `${frontendUrl}/cancel`,
-    });
+        success_url: `${frontendUrl}/success`,
+        cancel_url: `${frontendUrl}/cancel`,
+      });
 
     console.log(
       "✅ Checkout session created:",
@@ -121,7 +210,6 @@ app.post("/create-checkout-session", async (req, res) => {
       success: true,
       url: session.url,
     });
-
   } catch (err) {
     console.error("❌ Stripe Error:", err);
 
@@ -131,6 +219,10 @@ app.post("/create-checkout-session", async (req, res) => {
     });
   }
 });
+
+// =====================================================
+// START SERVER
+// =====================================================
 
 app.listen(PORT, "0.0.0.0", () => {
   console.log(
