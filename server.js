@@ -11,10 +11,29 @@ const PORT = process.env.PORT || 4242;
 app.use(cors());
 app.use(express.json());
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+const secretKey = process.env.STRIPE_SECRET_KEY;
+
+if (!secretKey) {
+  console.error("❌ STRIPE_SECRET_KEY is missing!");
+  process.exit(1);
+}
+
+const stripeMode = secretKey.startsWith("sk_live_")
+  ? "LIVE"
+  : secretKey.startsWith("sk_test_")
+  ? "TEST"
+  : "UNKNOWN";
+
+console.log(`🔐 STRIPE MODE: ${stripeMode}`);
+
+const stripe = new Stripe(secretKey);
 
 app.get("/", (req, res) => {
-  res.send("Stripe Server Running");
+  res.json({
+    success: true,
+    message: "Stripe Server Running",
+    stripeMode,
+  });
 });
 
 app.post("/create-checkout-session", async (req, res) => {
@@ -38,18 +57,24 @@ app.post("/create-checkout-session", async (req, res) => {
     const lineItems = cartItems.map((item) => ({
       price_data: {
         currency: "gbp",
+
         product_data: {
           name: item.name,
         },
+
         unit_amount: Math.round(
-          parseFloat(item.price.replace("£", "")) * 100
+          parseFloat(
+            String(item.price).replace("£", "").trim()
+          ) * 100
         ),
       },
+
       quantity: item.quantity,
     }));
 
     const frontendUrl =
-      process.env.FRONTEND_URL || "http://localhost:5173";
+      process.env.FRONTEND_URL ||
+      "https://amirahstoreltd.co.uk";
 
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
@@ -64,9 +89,13 @@ app.post("/create-checkout-session", async (req, res) => {
 
       invoice_creation: {
         enabled: true,
+
         invoice_data: {
-          description: "AMIRAH STORE LIMITED - Customer Order",
-          footer: "Thank you for shopping with AMIRAH STORE LIMITED.",
+          description:
+            "AMIRAH STORE LIMITED - Customer Order",
+
+          footer:
+            "Thank you for shopping with AMIRAH STORE LIMITED.",
         },
       },
 
@@ -83,12 +112,18 @@ app.post("/create-checkout-session", async (req, res) => {
       cancel_url: `${frontendUrl}/cancel`,
     });
 
+    console.log(
+      "✅ Checkout session created:",
+      session.id
+    );
+
     res.json({
       success: true,
       url: session.url,
     });
+
   } catch (err) {
-    console.error("Stripe Error:", err);
+    console.error("❌ Stripe Error:", err);
 
     res.status(500).json({
       success: false,
@@ -98,5 +133,7 @@ app.post("/create-checkout-session", async (req, res) => {
 });
 
 app.listen(PORT, "0.0.0.0", () => {
-  console.log(`Stripe Server Running on port ${PORT}`);
+  console.log(
+    `🚀 Stripe Server Running on port ${PORT}`
+  );
 });
