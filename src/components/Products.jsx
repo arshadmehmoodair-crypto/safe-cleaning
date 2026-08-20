@@ -79,7 +79,11 @@ function Products() {
         </button>
 
         <button
-          className={category === "Cleaning Accessories" ? "active-category" : ""}
+          className={
+            category === "Cleaning Accessories"
+              ? "active-category"
+              : ""
+          }
           onClick={() => setCategory("Cleaning Accessories")}
         >
           Cleaning Accessories
@@ -136,6 +140,7 @@ function Products() {
               name={product.name}
               description={product.description}
               price={product.price}
+              stock={product.stock}
             />
           ))}
         </div>

@@ -11,7 +11,15 @@ export function CartProvider({ children }) {
       (item) => item.id === product.id
     );
 
+    // Check stock before adding
     if (existingProduct) {
+      if (existingProduct.quantity >= product.stock) {
+        toast.error(
+          `Sorry, only ${product.stock} available.`
+        );
+        return;
+      }
+
       setCartItems(
         cartItems.map((item) =>
           item.id === product.id
@@ -25,6 +33,11 @@ export function CartProvider({ children }) {
 
       toast.success("Quantity updated successfully!");
     } else {
+      if (product.stock <= 0) {
+        toast.error("This product is out of stock.");
+        return;
+      }
+
       setCartItems([
         ...cartItems,
         {
@@ -46,6 +59,19 @@ export function CartProvider({ children }) {
   }
 
   function increaseQuantity(id) {
+    const item = cartItems.find(
+      (item) => item.id === id
+    );
+
+    if (!item) return;
+
+    if (item.quantity >= item.stock) {
+      toast.error(
+        `Only ${item.stock} available in stock.`
+      );
+      return;
+    }
+
     setCartItems(
       cartItems.map((item) =>
         item.id === id
@@ -61,7 +87,11 @@ export function CartProvider({ children }) {
   }
 
   function decreaseQuantity(id) {
-    const item = cartItems.find((item) => item.id === id);
+    const item = cartItems.find(
+      (item) => item.id === id
+    );
+
+    if (!item) return;
 
     setCartItems(
       cartItems
@@ -76,7 +106,7 @@ export function CartProvider({ children }) {
         .filter((item) => item.quantity > 0)
     );
 
-    if (item?.quantity === 1) {
+    if (item.quantity === 1) {
       toast.error("Product removed from cart.");
     } else {
       toast.info("Quantity decreased.");

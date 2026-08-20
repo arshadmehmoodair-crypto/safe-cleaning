@@ -7,8 +7,11 @@ function ProductCard({
   name,
   description,
   price,
+  stock,
 }) {
   const { addToCart } = useCart();
+
+  const isOutOfStock = stock <= 0;
 
   return (
     <div className="product-card">
@@ -31,6 +34,17 @@ function ProductCard({
 
         <h4 className="price">{price}</h4>
 
+        {/* Stock Information */}
+        {isOutOfStock ? (
+          <p className="stock out-of-stock">
+            Out of Stock
+          </p>
+        ) : (
+          <p className="stock">
+            Only {stock} left
+          </p>
+        )}
+
         <div className="card-buttons">
           <Link to={`/products/${id}`}>
             <button className="view-btn">
@@ -40,6 +54,7 @@ function ProductCard({
 
           <button
             className="cart-btn"
+            disabled={isOutOfStock}
             onClick={() =>
               addToCart({
                 id,
@@ -47,10 +62,11 @@ function ProductCard({
                 name,
                 description,
                 price,
+                stock,
               })
             }
           >
-            Add to Cart
+            {isOutOfStock ? "Out of Stock" : "Add to Cart"}
           </button>
         </div>
       </div>
