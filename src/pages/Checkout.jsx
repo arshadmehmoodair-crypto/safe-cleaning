@@ -43,7 +43,7 @@ function Checkout() {
 
     try {
       const response = await axios.post(
-        "https://safe-cleaning.onrender.com/create-checkout-session",
+        "https://safe-cleaning-1.onrender.com/create-checkout-session",
         {
           cartItems,
           customer,
