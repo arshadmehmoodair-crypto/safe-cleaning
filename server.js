@@ -789,6 +789,7 @@ app.post(
       );
 
       res.status(500).json({
+
         success: false,
         error: err.message,
       });
@@ -805,31 +806,27 @@ app.get("/admin", async (req, res) => {
     const today = getLondonDate(0);
     const yesterday = getLondonDate(-1);
 
-    const salesToday = await pool.query(
-      `
+    // Today's sales
+    const salesToday = await pool.query(`
       SELECT
         COALESCE(SUM(total_amount), 0) AS sales,
         COUNT(*) AS orders
       FROM orders
       WHERE created_at >= $1::date
         AND created_at < ($1::date + INTERVAL '1 day')
-      `,
-      [today]
-    );
+    `, [today]);
 
-    const salesYesterday =
-      await pool.query(
-        `
-        SELECT
-          COALESCE(SUM(total_amount), 0) AS sales,
-          COUNT(*) AS orders
-        FROM orders
-        WHERE created_at >= $1::date
-          AND created_at < ($1::date + INTERVAL '1 day')
-        `,
-        [yesterday]
-      );
+    // Yesterday's sales
+    const salesYesterday = await pool.query(`
+      SELECT
+        COALESCE(SUM(total_amount), 0) AS sales,
+        COUNT(*) AS orders
+      FROM orders
+      WHERE created_at >= $1::date
+        AND created_at < ($1::date + INTERVAL '1 day')
+    `, [yesterday]);
 
+    // Total sales
     const allSales = await pool.query(`
       SELECT
         COALESCE(SUM(total_amount), 0) AS sales,
@@ -837,6 +834,7 @@ app.get("/admin", async (req, res) => {
       FROM orders
     `);
 
+    // Products / stock
     const products = await pool.query(`
       SELECT
         id,
@@ -847,8 +845,8 @@ app.get("/admin", async (req, res) => {
       ORDER BY stock ASC, id ASC
     `);
 
-    const recentOrders =
-      await pool.query(`
+    // Recent orders
+    const recentOrders = await pool.query(`
       SELECT
         id,
         customer_name,
@@ -862,8 +860,8 @@ app.get("/admin", async (req, res) => {
       LIMIT 50
     `);
 
-    const topProducts =
-      await pool.query(`
+    // Top selling products
+    const topProducts = await pool.query(`
       SELECT
         product_name,
         SUM(quantity)::INTEGER AS quantity_sold,
@@ -878,9 +876,7 @@ app.get("/admin", async (req, res) => {
       Number(salesToday.rows[0].sales || 0);
 
     const yesterdaySales =
-      Number(
-        salesYesterday.rows[0].sales || 0
-      );
+      Number(salesYesterday.rows[0].sales || 0);
 
     const totalSales =
       Number(allSales.rows[0].sales || 0);
@@ -889,25 +885,38 @@ app.get("/admin", async (req, res) => {
       Number(salesToday.rows[0].orders || 0);
 
     const yesterdayOrders =
-      Number(
-        salesYesterday.rows[0].orders || 0
-      );
+      Number(salesYesterday.rows[0].orders || 0);
 
     const totalOrders =
       Number(allSales.rows[0].orders || 0);
 
+    // Total units available
+    const availableStock =
+      products.rows.reduce(
+        (total, product) =>
+          total + Number(product.stock || 0),
+        0
+      );
+
+    // Products with 5 or fewer units
     const lowStock =
       products.rows.filter(
-        (p) => Number(p.stock) <= 5
+        (product) =>
+          Number(product.stock) <= 5
       );
 
     const html = `
 <!DOCTYPE html>
+
 <html>
+
 <head>
+
 <meta charset="UTF-8">
 
-<title>AMIRAH STORE - Admin Dashboard</title>
+<title>
+AMIRAH STORE - Admin Dashboard
+</title>
 
 <meta
   name="viewport"
@@ -915,6 +924,10 @@ app.get("/admin", async (req, res) => {
 />
 
 <style>
+
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
@@ -926,15 +939,16 @@ body {
 header {
   background: #111827;
   color: white;
-  padding: 24px 30px;
+  padding: 28px 30px;
 }
 
 header h1 {
   margin: 0;
+  font-size: 28px;
 }
 
 header p {
-  margin: 7px 0 0;
+  margin: 8px 0 0;
   color: #cbd5e1;
 }
 
@@ -944,39 +958,64 @@ header p {
   padding: 25px;
 }
 
+/* DASHBOARD CARDS */
+
 .cards {
   display: grid;
+
   grid-template-columns:
-    repeat(auto-fit, minmax(210px, 1fr));
+    repeat(
+      auto-fit,
+      minmax(210px, 1fr)
+    );
+
   gap: 18px;
+
   margin-bottom: 25px;
 }
 
 .card {
   background: white;
+
   border-radius: 14px;
+
   padding: 22px;
+
   box-shadow:
     0 4px 18px rgba(0,0,0,.06);
 }
 
 .card h3 {
   margin: 0;
+
   color: #64748b;
+
   font-size: 14px;
 }
 
 .card .number {
   margin-top: 10px;
+
   font-size: 30px;
+
   font-weight: bold;
 }
 
+.card .small {
+  margin-top: 6px;
+}
+
+/* SECTIONS */
+
 .section {
   background: white;
+
   border-radius: 14px;
+
   padding: 22px;
+
   margin-bottom: 25px;
+
   box-shadow:
     0 4px 18px rgba(0,0,0,.06);
 }
@@ -985,165 +1024,321 @@ header p {
   margin-top: 0;
 }
 
+/* TABLE */
+
 .table-wrap {
   overflow-x: auto;
 }
 
 table {
   width: 100%;
+
   border-collapse: collapse;
 }
 
 th,
 td {
   padding: 12px;
+
   text-align: left;
-  border-bottom: 1px solid #e5e7eb;
+
+  border-bottom:
+    1px solid #e5e7eb;
 }
 
 th {
   background: #f8fafc;
 }
 
+/* STOCK */
+
 .stock-low {
   color: #dc2626;
+
   font-weight: bold;
 }
 
 .stock-ok {
   color: #16a34a;
+
   font-weight: bold;
 }
 
+/* BADGE */
+
 .badge {
   display: inline-block;
+
   padding: 5px 9px;
+
   border-radius: 999px;
+
   background: #dcfce7;
+
   color: #166534;
+
   font-size: 12px;
 }
 
 .small {
   color: #64748b;
+
   font-size: 13px;
 }
 
 </style>
+
 </head>
 
 <body>
 
 <header>
-  <h1>AMIRAH STORE LIMITED</h1>
-  <p>Sales, Orders & Inventory Dashboard</p>
+
+<h1>
+AMIRAH STORE LIMITED
+</h1>
+
+<p>
+Sales, Orders & Inventory Dashboard
+</p>
+
 </header>
 
 <div class="container">
 
+<!-- ================================================= -->
+<!-- DASHBOARD CARDS -->
+<!-- ================================================= -->
+
 <div class="cards">
 
-  <div class="card">
-    <h3>Today's Sales</h3>
-    <div class="number">
-      £${todaySales.toFixed(2)}
-    </div>
-    <div class="small">
-      ${todayOrders} orders
-    </div>
-  </div>
+<!-- Today's Sales -->
 
-  <div class="card">
-    <h3>Yesterday's Sales</h3>
-    <div class="number">
-      £${yesterdaySales.toFixed(2)}
-    </div>
-    <div class="small">
-      ${yesterdayOrders} orders
-    </div>
-  </div>
+<div class="card">
 
-  <div class="card">
-    <h3>Total Sales</h3>
-    <div class="number">
-      £${totalSales.toFixed(2)}
-    </div>
-    <div class="small">
-      ${totalOrders} orders
-    </div>
-  </div>
+<h3>
+Today's Sales
+</h3>
 
-  <div class="card">
-    <h3>Low Stock</h3>
-    <div class="number">
-      ${lowStock.length}
-    </div>
-    <div class="small">
-      Products with 5 or fewer left
-    </div>
-  </div>
+<div class="number">
+£${todaySales.toFixed(2)}
+</div>
+
+<div class="small">
+${todayOrders} orders today
+</div>
 
 </div>
 
+
+<!-- Yesterday's Sales -->
+
+<div class="card">
+
+<h3>
+Yesterday's Sales
+</h3>
+
+<div class="number">
+£${yesterdaySales.toFixed(2)}
+</div>
+
+<div class="small">
+${yesterdayOrders} orders yesterday
+</div>
+
+</div>
+
+
+<!-- Total Sales -->
+
+<div class="card">
+
+<h3>
+Total Sales
+</h3>
+
+<div class="number">
+£${totalSales.toFixed(2)}
+</div>
+
+<div class="small">
+All orders
+</div>
+
+</div>
+
+
+<!-- Total Orders -->
+
+<div class="card">
+
+<h3>
+Orders
+</h3>
+
+<div class="number">
+${totalOrders}
+</div>
+
+<div class="small">
+Total orders received
+</div>
+
+</div>
+
+
+<!-- Available Stock -->
+
+<div class="card">
+
+<h3>
+Available Stock
+</h3>
+
+<div class="number">
+${availableStock}
+</div>
+
+<div class="small">
+Total units available
+</div>
+
+</div>
+
+
+<!-- Low Stock -->
+
+<div class="card">
+
+<h3>
+Low Stock
+</h3>
+
+<div class="number">
+${lowStock.length}
+</div>
+
+<div class="small">
+Products with 5 or fewer left
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- RECENT ORDERS -->
+<!-- ================================================= -->
+
 <div class="section">
 
-<h2>Recent Orders</h2>
+<h2>
+Recent Orders
+</h2>
 
 <div class="table-wrap">
 
 <table>
 
 <thead>
+
 <tr>
-<th>Order</th>
-<th>Customer</th>
-<th>Email</th>
-<th>Amount</th>
-<th>Status</th>
-<th>Date</th>
+
+<th>
+Order
+</th>
+
+<th>
+Customer
+</th>
+
+<th>
+Email
+</th>
+
+<th>
+Amount
+</th>
+
+<th>
+Status
+</th>
+
+<th>
+Date
+</th>
+
 </tr>
+
 </thead>
 
 <tbody>
 
 ${
+  recentOrders.rows.length === 0
+    ? `
+      <tr>
+        <td colspan="6">
+          No orders yet.
+        </td>
+      </tr>
+    `
+    :
   recentOrders.rows
     .map(
       (order) => `
 <tr>
 
-<td>#${order.id}</td>
+<td>
+#${order.id}
+</td>
 
 <td>
 ${escapeHtml(
-  order.customer_name || "Customer"
+  order.customer_name ||
+  "Customer"
 )}
 </td>
 
 <td>
 ${escapeHtml(
-  order.customer_email || ""
+  order.customer_email ||
+  ""
 )}
 </td>
 
 <td>
-£${Number(order.total_amount).toFixed(2)}
+£${Number(
+  order.total_amount
+).toFixed(2)}
 </td>
 
 <td>
+
 <span class="badge">
+
 ${escapeHtml(
   order.payment_status
 )}
+
 </span>
+
 </td>
 
 <td>
+
 ${new Date(
   order.created_at
-).toLocaleString("en-GB", {
-  timeZone: "Europe/London",
-})}
+).toLocaleString(
+  "en-GB",
+  {
+    timeZone:
+      "Europe/London",
+  }
+)}
+
 </td>
 
 </tr>
@@ -1160,25 +1355,53 @@ ${new Date(
 
 </div>
 
+
+<!-- ================================================= -->
+<!-- TOP SELLING PRODUCTS -->
+<!-- ================================================= -->
+
 <div class="section">
 
-<h2>Top Selling Products</h2>
+<h2>
+Top Selling Products
+</h2>
 
 <div class="table-wrap">
 
 <table>
 
 <thead>
+
 <tr>
-<th>Product</th>
-<th>Quantity Sold</th>
-<th>Revenue</th>
+
+<th>
+Product
+</th>
+
+<th>
+Quantity Sold
+</th>
+
+<th>
+Revenue
+</th>
+
 </tr>
+
 </thead>
 
 <tbody>
 
 ${
+  topProducts.rows.length === 0
+    ? `
+      <tr>
+        <td colspan="3">
+          No sales yet.
+        </td>
+      </tr>
+    `
+    :
   topProducts.rows
     .map(
       (product) => `
@@ -1214,21 +1437,43 @@ ${product.quantity_sold}
 
 </div>
 
+
+<!-- ================================================= -->
+<!-- AVAILABLE STOCK -->
+<!-- ================================================= -->
+
 <div class="section">
 
-<h2>Inventory / Stock</h2>
+<h2>
+Available Stock
+</h2>
 
 <div class="table-wrap">
 
 <table>
 
 <thead>
+
 <tr>
-<th>ID</th>
-<th>Product</th>
-<th>Price</th>
-<th>Available Stock</th>
+
+<th>
+ID
+</th>
+
+<th>
+Product
+</th>
+
+<th>
+Price
+</th>
+
+<th>
+Available
+</th>
+
 </tr>
+
 </thead>
 
 <tbody>
@@ -1239,7 +1484,9 @@ ${
       (product) => `
 <tr>
 
-<td>${product.id}</td>
+<td>
+${product.id}
+</td>
 
 <td>
 ${escapeHtml(
@@ -1254,10 +1501,10 @@ ${escapeHtml(
 </td>
 
 <td class="${
-        Number(product.stock) <= 5
-          ? "stock-low"
-          : "stock-ok"
-      }">
+  Number(product.stock) <= 5
+    ? "stock-low"
+    : "stock-ok"
+}">
 
 ${product.stock}
 
@@ -1277,22 +1524,115 @@ ${product.stock}
 
 </div>
 
+
+<!-- ================================================= -->
+<!-- LOW STOCK -->
+<!-- ================================================= -->
+
 <div class="section">
 
-<h2>System Status</h2>
+<h2>
+Low Stock Products
+</h2>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>
+Product
+</th>
+
+<th>
+Remaining
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+${
+  lowStock.length === 0
+    ? `
+      <tr>
+        <td colspan="2">
+          All products have healthy stock.
+        </td>
+      </tr>
+    `
+    :
+  lowStock
+    .map(
+      (product) => `
+<tr>
+
+<td>
+${escapeHtml(
+  product.name
+)}
+</td>
+
+<td class="stock-low">
+
+${product.stock}
+
+</td>
+
+</tr>
+`
+    )
+    .join("")
+}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- SYSTEM STATUS -->
+<!-- ================================================= -->
+
+<div class="section">
+
+<h2>
+System Status
+</h2>
 
 <p>
+
 <span class="badge">
+
 Stripe ${stripeMode}
+
 </span>
+
 </p>
 
 <p>
-Database: <strong>Connected</strong>
+
+Database:
+<strong>
+Connected
+</strong>
+
 </p>
 
 <p class="small">
-Dashboard date timezone: Europe/London
+
+Dashboard timezone:
+Europe/London
+
 </p>
 
 </div>
@@ -1300,21 +1640,29 @@ Dashboard date timezone: Europe/London
 </div>
 
 </body>
+
 </html>
 `;
 
     res.send(html);
+
   } catch (err) {
+
     console.error(
       "❌ Admin dashboard error:",
       err
     );
 
     res.status(500).send(`
-      <h1>Dashboard Error</h1>
-      <pre>${escapeHtml(
-        err.message
-      )}</pre>
+      <h1>
+        Dashboard Error
+      </h1>
+
+      <pre>
+${escapeHtml(
+  err.message
+)}
+      </pre>
     `);
   }
 });
