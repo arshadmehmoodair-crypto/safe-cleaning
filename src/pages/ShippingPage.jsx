@@ -6,7 +6,7 @@ function ShippingPolicy() {
         <h1>Shipping Policy</h1>
 
         <p>
-          At <strong>AMIRAH STORE LIMITED</strong>,
+          At <strong>MARIYA RAA SADDI LTD</strong>,
           we aim to dispatch and deliver your orders as quickly and
           efficiently as possible throughout the United Kingdom.
         </p>
@@ -52,7 +52,7 @@ function ShippingPolicy() {
         <h2>Business Address</h2>
 
         <p>
-          AMIRAH STORE LIMITED
+          MARIYA RAA SADDI LTD
           <br />
           3 St Awdry Road
           <br />
@@ -64,7 +64,7 @@ function ShippingPolicy() {
           <br />
           United Kingdom
           <br /><br />
-          Phone: +44 7577 315486
+          Phone: +447848163522
         </p>
 
       </div>

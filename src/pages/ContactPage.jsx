@@ -46,7 +46,7 @@ function ContactPage() {
           margin: "40px auto",
         }}
       >
-        <h3>AMIRAH STORE LIMITED</h3>
+        <h3>MARIYA RAA SADDI LTD</h3>
 
         <p>
           We'd love to hear from you. If you have any questions about our
@@ -54,7 +54,7 @@ function ContactPage() {
         </p>
 
         <p>
-          <strong>Email:</strong> support@amirahstoreltd.co.uk
+          <strong>Email:</strong> mariyasaddiqueuk@gmail.com
         </p>
 
         <p>

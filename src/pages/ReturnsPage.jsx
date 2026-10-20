@@ -6,7 +6,7 @@ function ReturnsPolicy() {
         <h1>Returns & Refund Policy</h1>
 
         <p>
-          At <strong>AMIRAH STORE LIMITED</strong>,
+          At <strong>MARIYA RAA SADDI LTD</strong>,
           we want you to be satisfied with every purchase. If you are not
           completely happy with your order, please read our returns policy
           below.
@@ -39,15 +39,15 @@ function ReturnsPolicy() {
         <h2>Return Address</h2>
 
         <p>
-          AMIRAH STORE LIMITED
+          MARIYA RAA SADDI LTD
           <br />
-          115 Wantage Road
+          Flat 4, 1 Wantage Road
           <br />
           Reading
           <br />
           Berkshire
           <br />
-          RG30 2SN
+          RG30 2SH
           <br />
           United Kingdom
         </p>
@@ -55,9 +55,9 @@ function ReturnsPolicy() {
         <h2>Need Help?</h2>
 
         <p>
-          Phone: +44 7577 315486
+          Phone: +447848163522
           <br />
-          Email: support@amirahstoreltd.co.uk
+          Email: mariyasaddiqueuk@gmail.com
         </p>
 
       </div>

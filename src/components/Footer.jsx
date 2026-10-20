@@ -1,104 +1,72 @@
+
 import { Link } from "react-router-dom";
 
 function Footer() {
   return (
     <footer className="footer">
       <div className="footer-container">
-
-        {/* Company */}
-
         <div className="footer-section">
-          <h2>AMIRAH AMIRAH STORE LIMITED</h2>
-
+          <h2>MARIYA RAA SADDI LTD</h2>
           <p>
-            We supply high-quality cleaning products for homes,
-            offices and commercial businesses across the United Kingdom.
+            We supply high-quality cleaning products for
+            homes, offices and commercial businesses
+            across the United Kingdom.
           </p>
         </div>
 
-        {/* Quick Links */}
-
         <div className="footer-section">
-
           <h3>Quick Links</h3>
-
           <Link to="/">Home</Link>
           <Link to="/products">Products</Link>
           <Link to="/about">About Us</Link>
           <Link to="/contact">Contact</Link>
-
         </div>
 
-        {/* Policies */}
-
         <div className="footer-section">
-
           <h3>Customer Information</h3>
-
-          <Link to="/privacy-policy">
-            Privacy Policy
-          </Link>
-
-          <Link to="/terms">
-            Terms & Conditions
-          </Link>
-
-          <Link to="/shipping-policy">
-            Shipping Policy
-          </Link>
-
-          <Link to="/returns-policy">
-            Returns Policy
-          </Link>
-
+          <Link to="/privacy-policy">Privacy Policy</Link>
+          <Link to="/terms">Terms &amp; Conditions</Link>
+          <Link to="/shipping-policy">Shipping Policy</Link>
+          <Link to="/returns-policy">Returns Policy</Link>
         </div>
 
-        {/* Contact */}
-
         <div className="footer-section">
-
           <h3>Contact Us</h3>
 
           <p>
-            📍 115 Wantage Road,
+            📍 Flat 4, 1 Wantage Road,
             <br />
-            Reading,
+            Reading, Berkshire,
             <br />
-            Berkshire,
+            United Kingdom,
             <br />
-            RG30 2SN,
-            <br />
-            United Kingdom
+            RG30 2SH
           </p>
 
-          <p>
-            📞 +44 7577 315486
-          </p>
+          <p>📞 +447848163522</p>
 
           <p>
             📦 Return Address:
             <br />
-            Same as Business Address
+            Please contact us before returning an item.
           </p>
 
           <p>
             📧 Business Email
             <br />
-            support@amirahstoreltd.co.uk
+            <a href="mailto:mariyasaddiqueuk@gmail.com">
+              mariyasaddiqueuk@gmail.com
+            </a>
           </p>
-
         </div>
-
       </div>
 
       <hr />
 
       <div className="footer-bottom">
-
         <p>
-          © 2026 AMIRAH AMIRAH STORE LIMITED. All Rights Reserved.
+          © 2026 MARIYA RAA SADDI LTD. All Rights Reserved.
         </p>
-
       </div>
     </footer>
   );

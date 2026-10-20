@@ -14,25 +14,25 @@ function Contact() {
 
           <div className="contact-card">
             <h3>📞 Phone</h3>
-            <p>+44 7577 315486</p>
+            <p>+447848163522</p>
           </div>
 
           <div className="contact-card">
             <h3>📧 Business Email</h3>
-            <p>support@amirahstoreltd.co.uk</p>
+            <p>mariyasaddiqueuk@gmail.com</p>
           </div>
 
           <div className="contact-card">
             <h3>📍 Business Address</h3>
 
             <p>
-              115 Wantage Road
+              Flat 4, 1 Wantage Road
               <br />
               Reading
               <br />
               Berkshire
               <br />
-              RG30 2SN
+              RG30 2SH
               <br />
               United Kingdom
             </p>
@@ -67,7 +67,7 @@ function Contact() {
             <h3>🏢 Company</h3>
 
             <p>
-              AMIRAH STORE LIMITED
+              MARIYA RAA SADDI LTD
             </p>
           </div>
 

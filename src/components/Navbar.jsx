@@ -15,7 +15,7 @@ function Navbar() {
     <nav className="navbar">
       <div className="logo">
         <NavLink to="/" onClick={() => setMenuOpen(false)}>
-          AMIRAH STORE LIMITED
+          MARIYA RAA SADDI LTD
         </NavLink>
       </div>
 

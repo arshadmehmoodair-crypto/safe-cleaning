@@ -6,7 +6,7 @@ function PrivacyPolicy() {
         <h1>Privacy Policy</h1>
 
         <p>
-          At <strong>AMIRAH STORE LIMITED</strong>,
+          At <strong>MARIYA RAA SADDI LTD</strong>,
           we value your privacy and are committed to protecting your
           personal information.
         </p>
@@ -40,22 +40,22 @@ function PrivacyPolicy() {
         <h2>Contact</h2>
 
         <p>
-          AMIRAH STORE LIMITED
+          MARIYA RAA SADDI LTD
           <br />
-          115 Wantage Road
+          Flat 4, 1 Wantage Road
 
           <br />
           Reading
           <br />
           Berkshire
           <br />
-          RG30 2SN
+          RG30 2SH
           <br />
           United Kingdom
           <br /><br />
-          Phone: +44 7577 315486
+          Phone: +447848163522
           <br />
-          Email: support@amirahstoreltd.co.uk
+          Email: mariyasaddiqueuk@gmail.com
         </p>
 
       </div>

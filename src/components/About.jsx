@@ -3,10 +3,10 @@ function About() {
     <section className="about">
       <div className="about-container">
 
-        <h2>About AMIRAH STORE LIMITED</h2>
+        <h2>About MARIYA RAA SADDI LTD</h2>
 
         <p className="about-intro">
-          AMIRAH STORE LIMITED is a UK-based supplier
+          MARIYA RAA SADDI LTD is a UK-based supplier
           of high-quality cleaning and maintenance products. We provide
           reliable solutions for homes, offices, schools, hotels,
           healthcare facilities and commercial businesses throughout
@@ -52,13 +52,13 @@ function About() {
             <h3>📍 Our Location</h3>
 
             <p>
-              115 Wantage Road
+              Flat 4, 1 Wantage Road
               <br />
               Reading
               <br />
               Berkshire
               <br />
-              RG30 2SN
+              RG30 2SH
               <br />
               United Kingdom
             </p>
@@ -70,7 +70,7 @@ function About() {
             <p>
               Phone:
               <br />
-              +44 7577 315486
+              +447848163522
             </p>
 
             <br />
@@ -78,7 +78,7 @@ function About() {
             <p>
               Business Email:
               <br />
-              support@amirahstoreltd.co.uk
+              mariyasaddiqueuk@gmail.com
             </p>
           </div>
 

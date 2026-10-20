@@ -19,7 +19,7 @@ function Hero() {
         </h1>
 
         <p>
-          AMIRAH STORE LIMITED supplies premium-quality
+          MARIYA RAA SADDI LTD supplies premium-quality
           cleaning and maintenance products for homes, offices, schools,
           hospitals and commercial businesses across the United Kingdom.
         </p>

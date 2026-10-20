@@ -6,7 +6,7 @@ function Terms() {
         <h1>Terms & Conditions</h1>
 
         <p>
-          Welcome to <strong>AMIRAH STORE LIMITED</strong>.
+          Welcome to <strong>MARIYA RAA SADDI LTD</strong>.
           By using our website and placing an order, you agree to the
           following Terms & Conditions.
         </p>
@@ -50,7 +50,7 @@ function Terms() {
         <h2>Contact</h2>
 
         <p>
-          AMIRAH STORE LIMITED
+          MARIYA RAA SADDI LTD
           <br />
           3 St Awdry Road
           <br />
@@ -62,7 +62,7 @@ function Terms() {
           <br />
           United Kingdom
           <br /><br />
-          Phone: +44 7577 315486
+          Phone: +447848163522
         </p>
 
       </div>

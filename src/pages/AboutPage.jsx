@@ -4,10 +4,10 @@ function AboutPage() {
       <h2>About Us</h2>
 
       <div className="card" style={{ maxWidth: "900px", margin: "40px auto" }}>
-        <h3>AMIRAH STORE LIMITED</h3>
+        <h3>MARIYA RAA SADDI LTD</h3>
 
         <p>
-          AMIRAH STORE LIMITED supplies professional cleaning
+          MARIYA RAA SADDI LTD supplies professional cleaning
           products and maintenance solutions for homes, offices and commercial
           businesses across the United Kingdom.
         </p>

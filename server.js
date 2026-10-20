@@ -736,10 +736,10 @@ app.post(
 
             invoice_data: {
               description:
-                "AMIRAH STORE LIMITED - Customer Order",
+                "MARIYA RAA SADDI LTD - Customer Order",
 
               footer:
-                "Thank you for shopping with AMIRAH STORE LIMITED.",
+                "Thank you for shopping with MARIYA RAA SADDI LTD.",
             },
           },
 
@@ -915,7 +915,7 @@ app.get("/admin", async (req, res) => {
 <meta charset="UTF-8">
 
 <title>
-AMIRAH STORE - Admin Dashboard
+MARIYA RAA SADDI LTD - Admin Dashboard
 </title>
 
 <meta
@@ -1095,7 +1095,7 @@ th {
 <header>
 
 <h1>
-AMIRAH STORE LIMITED
+MARIYA RAA SADDI LTD
 </h1>
 
 <p>
